@@ -1,22 +1,23 @@
-import { Component, Host, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { firstValueFrom, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { Character, GetCharactersResponse } from '../../models/models';
 import { CharacterCardComponent } from '../../components/character-card/character-card.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CharacterCardComponent],
+  imports: [ReactiveFormsModule, CharacterCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  title = 'rick_morty';
   characters = signal<Character[]>([]);
   page: number = 1;
   isLoading = signal<boolean>(false);
   hasMoreCharacters = signal<boolean>(true);
+  searchControl = new FormControl('');
 
   private http = inject(HttpService);
 
@@ -24,23 +25,32 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getCharacters();
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(200), distinctUntilChanged())
+      .subscribe((value) => {
+        this.onSearch();
+      });
   }
 
   private async getCharacters(): Promise<void> {
     if (this.isLoading()) return;
     this.isLoading.set(true);
     try {
-      const response = await firstValueFrom(
-        this.http.getData<GetCharactersResponse>('character', {
-          page: this.page,
-        })
+      const params: any = { page: this.page };
+      if (this.searchControl.value) params.name = this.searchControl.value;
+
+      const { results, info } = await firstValueFrom(
+        this.http.getData<GetCharactersResponse>('character', { ...params })
       );
-      console.log({ response });
-      if (!response.info.next) this.hasMoreCharacters.set(false);
-      this.characters.update((characters) => [
-        ...characters,
-        ...response.results,
-      ]);
+
+      if (!info.next) this.hasMoreCharacters.set(false);
+      if (this.page === 1) {
+        this.characters.set(results);
+      } else {
+        this.characters.update((characters) => [...characters, ...results]);
+      }
+
       this.page++;
     } catch (error) {
       console.error(error);
@@ -48,6 +58,13 @@ export class HomeComponent {
     } finally {
       this.isLoading.set(false);
     }
+  }
+
+  onSearch(): void {
+    this.page = 1;
+    this.characters.set([]);
+    this.hasMoreCharacters.set(true);
+    this.getCharacters();
   }
 
   @HostListener('window:scroll', ['$event'])
