@@ -1,21 +1,24 @@
-<div class="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white p-4 transition-colors duration-300">
+<div
+  class=" min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white p-4 transition-colors duration-300">
+  <div class="container mx-auto">
 
-  <header class="flex flex-col items-center mb-6">
-    <img src="/assets/images/rick_morty.png" alt="Rick and Morty Logo" class="w-full max-w-xl mb-4">
-    <h1 class="text-3xl font-bold">Rick and Morty</h1>
-  </header>
+    <header class="flex flex-col items-center mb-6">
+      <img src="/assets/images/rick_morty.png" alt="Rick and Morty Logo" class="w-full max-w-xl mb-4">
+      <h1 class="text-3xl font-bold">Rick and Morty</h1>
+    </header>
 
-  <!-- Serach input -->
-  <div class="flex justify-center mb-6">
-    <input type="text" placeholder="Search characters..."
-      class="w-1/2 p-2 border border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <!-- Serach input -->
+    <div class="flex justify-center mb-6">
+      <input type="text" placeholder="Search characters..."
+        class="w-1/2 p-2 border border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <article class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mx-auto p-8">
+
+      @for(character of characters(); track character.id) {
+      <app-character-card [character]="character"></app-character-card>
+      }
+    </article>
+
   </div>
-
-  <article class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mx-auto p-8">
-
-    @for(character of characters(); track character.id) {
-    <app-character-card [character]="character"></app-character-card>
-    }
-  </article>
-
 </div>
