@@ -1,0 +1,69 @@
+<div class="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white p-4 transition-colors duration-300">
+  <div class="container mx-auto flex flex-col items-center space-y-8">
+    <div class="w-full flex justify-end">
+      <app-theme-toggle></app-theme-toggle>
+    </div>
+    <!-- Tornar a la pàgina principal -->
+    <div class="w-full flex justify-start">
+      <button
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition-colors duration-300"
+        (click)="goBack()">
+        ← Back to Home
+      </button>
+    </div>
+
+    <!-- Targeta del personatge -->
+    <div class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <div class="flex flex-col md:flex-row">
+        <!-- Imatge del personatge -->
+        <div class="md:w-1/3">
+          <img [src]="character?.image" [alt]="character?.name" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Informació del personatge -->
+        <div class="md:w-2/3 p-6 space-y-4">
+          <!-- Nom del personatge -->
+          <h1 class="text-3xl font-bold mb-2">{{ character?.name }}</h1>
+
+          <!-- Estat i Espècie -->
+          <div class="flex items-center space-x-2">
+            <span class="inline-block w-4 h-4 rounded-full" [class.bg-green-500]="character?.status === 'Alive'"
+              [class.bg-red-500]="character?.status === 'Dead'" [class.bg-gray-500]="character?.status === 'unknown'">
+            </span>
+            <span class="text-lg">{{ character?.status }} - {{ character?.species }}</span>
+          </div>
+
+          <!-- Gènere del personatge -->
+          <p class="text-lg">
+            <span class="font-bold">Gender: </span>{{ character?.gender }}
+          </p>
+
+          <!-- Origen del personatge -->
+          <p class="text-lg">
+            <span class="font-bold">Origin: </span>{{ character?.origin?.name }}
+          </p>
+
+          <!-- Última ubicació coneguda -->
+          <p class="text-lg">
+            <span class="font-bold">Last known location: </span>{{ character?.location?.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Episodis del personatge -->
+    <div class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4">
+      <h2 class="text-2xl font-bold">Episodes</h2>
+      <ul class="space-y-2">
+        @for(episode of character?.episode; track episode) {
+        <li class="flex justify-between items-center p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md">
+          <span class="text-lg">{{ episode }}</span>
+          <a [href]="episode" target="_blank" class="text-blue-500 hover:text-blue-600 font-medium">
+            View Episode
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
