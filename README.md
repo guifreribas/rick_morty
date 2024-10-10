@@ -25,14 +25,14 @@ This project aims to demonstrate frontend development skills using Angular and s
 
 Make sure you have the following software installed:
 
-- [Node.js](https://nodejs.org/) (version 14 or higher)
-- [Angular CLI](https://angular.io/cli) (version 18 or higher)
+- [Node.js](https://nodejs.org/) (version 20.14.0)
+- [Angular CLI](https://angular.io/cli) (version 18.0.3)
 
 ### Steps to Run Locally
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/guifreribas/rick_morty.git
    ```
 2. Navigate to the project directory:
    ```bash
