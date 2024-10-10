@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { buildHttpParams } from '../../utils/http-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class HttpService {
 
   constructor() {}
 
-  getData(endpoint: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}${endpoint}`);
+  getData(endpoint: string, params?: any): Observable<any> {
+    const HttpParams = buildHttpParams(params);
+    return this.http.get(`${this.baseUrl}${endpoint}`, { params: HttpParams });
   }
 }
