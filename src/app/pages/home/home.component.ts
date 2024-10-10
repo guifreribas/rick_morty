@@ -4,11 +4,12 @@ import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { Character, GetCharactersResponse } from '../../models/models';
 import { CharacterCardComponent } from '../../components/character-card/character-card.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ThemeToggleComponent } from '../../components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReactiveFormsModule, CharacterCardComponent],
+  imports: [ReactiveFormsModule, CharacterCardComponent, ThemeToggleComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
