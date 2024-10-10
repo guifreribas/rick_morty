@@ -2,6 +2,8 @@
 
 This project is part of the frontend technical test to participate in the hackathon organized by Barcelona Activa. It is an Angular 18 web application that consumes the Rick and Morty API and displays character cards. The application allows searching by character name and viewing a detailed page of each character.
 
+**Live Demo**: [Rick and Morty Character Explorer](https://rick-morty-lovat.vercel.app/)
+
 ## Table of Contents
 
 - [Project Description](#project-description)
